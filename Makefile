@@ -26,14 +26,16 @@ $(BROWSER_DEMOS)/iota-browser.js $(BROWSER_DEMOS)/lib.js iota-browser.js lib.js:
 	npm install ast-types
 	npm install jasmine-node
 clean:
-	rm -rf node_modules
 	rm -rf demos/browser/iota-browser.js
 	rm -rf demos/browser/lib.js
 	rm -rf lib.js
 	rm -rf iota-browser.js
 	rm -rf src/parser.js
 
+dist-clean: clean
+	rm -rf node_modules
+
 test:
 	./node_modules/.bin/jasmine-node test/iota-spec.js
 
-.PHONY: test clean
+.PHONY: test clean dist-clean

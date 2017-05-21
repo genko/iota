@@ -74,7 +74,7 @@ var _io = (function () {
 		setSlot: function (slot, value) {
 			slot = unwrapIoValue(slot);
 			this.slots[slot] = value;
-			return IoNil;
+			return this.slots[slot];
 		},
 		updateSlot: function (slot, value) {
 			if (this.slots[slot]) {
