@@ -1,11 +1,11 @@
 Iota
 ====
 
-Iota is a source-to-source compiler which accepts [Io language](http://iolanguage.org/) code and outputs JavaScript. It was written as an experiment for [CodeCombat's parser challenge](http://codecombat.challengepost.com/) and is currently being used in [CodeCombat](http://codecombat.com/) through [Aether](http://aetherjs.com/).
+Iota is a source-to-source compiler which accepts parts of the [Io language](http://iolanguage.org/) code and outputs JavaScript.
 
 The project is very much still in its infancy: only a minimal subset of Io is implemented. A number of core constructs and much of the standard library are not yet done.
 
-Try it out [here](http://dariusf.github.io/iota/).
+Try it out [here](http://genko.github.com). Chrome works, Firefox gives JS error.
 
 Features
 --------
