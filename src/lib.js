@@ -89,8 +89,8 @@ var _io = (function () {
 		proto: function () {
 			return this.proto;
 		},
-		writeln: function (thing) {
-			console.log(unwrapIoValue(thing.send('toIoString')));
+		println: function () {
+			console.log(unwrapIoValue(this.send('toIoString')));
 			return IoNil;
 		},
 		method: function () {
@@ -169,6 +169,9 @@ var _io = (function () {
 		charAt: function (n) {
 			n = unwrapIoValue(n);
 			return IoStringWrapper(unwrapIoValue(this).charAt(n));
+		},
+		"+": function (other) {
+			return IoStringWrapper(unwrapIoValue(this) + unwrapIoValue(other));
 		},
 		toIoString: function () {
 			return this;
