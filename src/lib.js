@@ -77,8 +77,10 @@ var _io = (function () {
 			return this.slots[slot];
 		},
 		updateSlot: function (slot, value) {
+			slot = unwrapIoValue(slot);
 			if (this.slots[slot]) {
 				this.slots[slot] = value;
+				return this.slots[slot];		
 			} else {
 				throw new Error("Object updateSlot: slot '" + slot + "' doesn't exist; cannot update");
 			}

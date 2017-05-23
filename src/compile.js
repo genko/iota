@@ -67,7 +67,7 @@ function assignmentOperatorMacro (astSequence) {
 			var message = chain.getMessages()[i];
 
 			// Find an assignment operator
-			if (message.getSymbolValue() !== ":=") continue;
+			if (message.getSymbolValue() !== ":=" && message.getSymbolValue() !== "=") continue;
 
 			// Pick the previous two elements in the chain.
 			// They are the target and the slot on the target that
@@ -114,8 +114,16 @@ function assignmentOperatorMacro (astSequence) {
 					[[assignmentSlot], [rhs]]
 				));
 
-			chain.setMessages(beforeThose.concat([target, setSlot]));
+			var updateSlot = new ast.Message(
+				new ast.Symbol(
+					new ast.Literal('identifier', 'updateSlot'),
+					[[assignmentSlot], [rhs]]
+				));
 
+			if (message.getSymbolValue() == ":=")
+				chain.setMessages(beforeThose.concat([target, setSlot]));
+			else
+				chain.setMessages(beforeThose.concat([target, updateSlot]));
 			// Continue on the newly created chain in case it contains
 			// more operators
 			chains.push(rhs);
