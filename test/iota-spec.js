@@ -22,11 +22,10 @@ describe('runtime', function() {
 		expect(iota.eval('if(false, 1000, 2000)')).toBe(2000);
 	});
 	it('operators', function () {
-		expect(iota.eval('1 + (2 * (3))')).toBe(7);
-		expect(iota.eval('1 + 2 * 3')).toBe(7);
-		expect(iota.eval('true and true')).toBe(true);
-		expect(iota.eval('true and (1 == 2)')).toBe(false);
-		expect(iota.eval('Person := Object clone; Person == Person')).toBe(true);
+		expect(iota.eval('1 +(2 *(3))')).toBe(7);
+		expect(iota.eval('true and(true)')).toBe(true);
+		expect(iota.eval('true and(1 ==(2))')).toBe(false);
+		expect(iota.eval('Person := Object clone; Person ==(Person)')).toBe(true);
 	});
 	it('object and messages', function() {
 		expect(iota.eval('Lobby setSlot("Person", Object clone); Person hello := 1; Person hello')).toBe(1);
@@ -34,7 +33,7 @@ describe('runtime', function() {
 		expect(iota.eval('Person := Object clone; Person talk := method(name); bob := Person clone; bob name := "bob"; bob talk')).toEqual('bob');
 	});
 	it('recursion', function() {
-		expect(iota.eval('fact := method(n, if (n == 0, 1, n * fact (n - 1))); fact(5)')).toBe(120);
+		expect(iota.eval('fact := method(n, if(n ==(0), 1, n *(fact(n -(1))))); fact(5)')).toBe(120);
 	});
 	it('invoking methods of an arbitrary object', function () {
 		var history = [];

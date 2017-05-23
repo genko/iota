@@ -5,7 +5,7 @@ function Chain (left, op, right) {
 	var result = new ast.Chain([left, op]);
 	// TODO Should this be a chain instead? .push(new ast.Chain([right]))?
 	// should be sorted out when the exact type of the args list is determined
-	op.getArguments().push([right]);
+	//op.getArguments().push([right]); //Commented this out, was arguments added to chain without using parentethis
 	return result;
 }
 
