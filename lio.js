@@ -1,7 +1,7 @@
 
 var compile = require('./src/compile');
 var lib = require('./src/lib');
-var _io = lib;
+var _lio = lib;
 
 function compileCode(input, options) {
 	options = options || {};

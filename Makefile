@@ -14,7 +14,7 @@ src/parser.js: src/parser.jison
 browser: $(BROWSER_DEMOS)/lio-browser.js $(BROWSER_DEMOS)/lib.js lio-browser.js lib.js
 
 $(BROWSER_DEMOS)/lio-browser.js $(BROWSER_DEMOS)/lib.js lio-browser.js lib.js: src/*.js lio.js
-	$(BROWSERIFY) -r ./lio.js:lio-compiler -o $(BROWSER_DEMOS)/lio-browser.js
+	$(BROWSERIFY) -r ./lio.js:lio -o $(BROWSER_DEMOS)/lio-browser.js
 	cp src/lib.js $(BROWSER_DEMOS)/lib.js
 	cp src/lib.js .
 	cp $(BROWSER_DEMOS)/lio-browser.js .

@@ -13,7 +13,7 @@
     "jison": "~0.4.13"
   },
   "bin": {
-    "iota": "bin/lio-cli"
+    "lio": "bin/lio-cli"
   },
   "scripts": {
     "test": "./node_modules/.bin/jasmine-node test"

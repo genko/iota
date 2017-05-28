@@ -1,5 +1,5 @@
 
-var iota = require('../lio');
+var lio = require('../lio');
 var prompt = 'lio> '
 
 process.stdin.resume();
