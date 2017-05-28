@@ -1,5 +1,4 @@
-
-var _io = (function () {
+var _lio = (function () {
 
 	function IoObject (slots, proto) {
 		var self = {};
@@ -154,6 +153,15 @@ var _io = (function () {
 		"-": function (other) {
 			return IoNumberWrapper(unwrapIoValue(this) - unwrapIoValue(other));
 		},
+		"%": function (other) {
+			return IoNumberWrapper(unwrapIoValue(this) % unwrapIoValue(other));
+		},
+		">": function (other) {
+			return IoBooleanWrapper(unwrapIoValue(this) > unwrapIoValue(other));
+		},	
+		"<": function (other) {
+			return IoBooleanWrapper(unwrapIoValue(this) < unwrapIoValue(other));
+		},		
 		"==": function (other) {
 			return IoBooleanWrapper(unwrapIoValue(this) === unwrapIoValue(other));
 		},
@@ -161,6 +169,41 @@ var _io = (function () {
 			return IoStringWrapper(unwrapIoValue(this));
 		}
 	}, IoRootObject);
+
+	var IoList = IoObject({
+		type: 'List',
+		list: function () {
+			var value = [];
+			for (var i = 0; i < arguments.length; i++) {
+    			value.push(arguments[i]);
+  			}
+			return IoListWrapper(value);
+		},
+		size: function () {
+    		return IoNumberWrapper(unwrapIoValue(this).length);
+		},
+		append: function (other) {
+    		return IoListWrapper(unwrapIoValue(this).push(other));
+		},		
+		"at": function (other) {
+			return unwrapIoValue(this)[unwrapIoValue(other)];
+		},
+		toIoString: function () {
+			return IoStringWrapper(unwrapIoValue(this));
+		}
+	}, IoRootObject);
+
+
+	function IoListWrapper (value) {
+		return IoObject({value: value}, IoList);
+	}
+
+	function IoListWrapperEachElement (value) {
+		for (index = 0; index < value.length; ++index) {
+    		value[index] = wrapJSValue(value[index])
+		}
+		return IoObject({value: value}, IoList);
+	}
 
 	function IoNumberWrapper (value) {
 		return IoObject({value: value}, IoNumber);
@@ -175,6 +218,16 @@ var _io = (function () {
 		"+": function (other) {
 			return IoStringWrapper(unwrapIoValue(this) + unwrapIoValue(other));
 		},
+		"split": function (other) {
+			if (other)
+			{
+				return IoListWrapperEachElement(unwrapIoValue(this).split(unwrapIoValue(other)));	
+			}
+			else
+			{
+				return IoListWrapperEachElement(unwrapIoValue(this).split(" "));
+			}
+		},		
 		toIoString: function () {
 			return this;
 		}
@@ -240,6 +293,7 @@ var _io = (function () {
 	Lobby.slots['true'] = IoTrue;
 	Lobby.slots['false'] = IoFalse;
 	Lobby.slots['Object'] = IoRootObject;
+	Lobby.slots['List'] = IoList;
 	Lobby.slots['Lobby'] = Lobby;
 	Lobby.proto = IoRootObject;
 
@@ -291,13 +345,15 @@ var _io = (function () {
 			return ioValue.slots.value;
 		case 'Boolean':
 			return ioValue.equals(IoTrue);
+		case 'List':
+			return ioValue.slots.value;
 		case 'Block':
 			// To wrap a block, we wrap it in a function which
 			// activates the original Io method when applied.
 			// The appropriate Io context is kept.
 
 			return function () {
-				var args = Array.prototype.slice.call(arguments).map(_io.wrapJSValue);
+				var args = Array.prototype.slice.call(arguments).map(_lio.wrapJSValue);
 				if (ioValue.activate) {
 					return unwrapIoValue(ioValue.activate.apply(ioValue, [ioValue.self].concat(args)));
 				} else {
@@ -368,7 +424,7 @@ var _io = (function () {
 				if (this.obj && this.obj[message]) {
 					if (typeof this.obj[message] === 'function') {
 						var args = Array.prototype.slice.call(arguments, 1);
-						args = args.map(_io.unwrapIoValue);
+						args = args.map(_lio.unwrapIoValue);
 						return wrapJSValue(this.obj[message].apply(this.obj, args));
 					} else {
 						return wrapJSValue(this.obj[message]);
@@ -396,6 +452,7 @@ var _io = (function () {
 		IoMethod: IoMethod,
 		IoProxy: IoProxy,
 		Lobby: Lobby,
+		IoList: IoList,
 		IoRootObject: IoRootObject,
 		getTypeOf: getTypeOf,
 		unwrapIoValue: unwrapIoValue,
@@ -405,5 +462,5 @@ var _io = (function () {
 })();
 
 if (typeof module !== 'undefined' && module.exports) {
-	module.exports = _io;
+	module.exports = _lio;
 }

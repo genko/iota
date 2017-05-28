@@ -1,6 +1,6 @@
 
-var iota = require('../iota');
-var prompt = 'iota> '
+var iota = require('../lio');
+var prompt = 'lio> '
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
@@ -12,7 +12,7 @@ process.stdin.on('data', function(text) {
 	}
 	var result;
 	try {
-		result = iota.eval(text);
+		result = lio.eval(text);
 	} catch (e) {
 		result = e.toString();
 	}

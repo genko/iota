@@ -1,8 +1,8 @@
 
 var fs = require('fs');
-var iota = require('./../../iota.js');
+var iota = require('./../../lio.js');
 
 var code = fs.readFileSync('demo.io', {encoding: 'utf-8'});
-var _io = iota.lib;
+var _lio = lio.lib;
 
-console.log(eval(iota.compile(code)));
+console.log(eval(lio.compile(code)));

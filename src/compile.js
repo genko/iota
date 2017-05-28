@@ -13,8 +13,8 @@ var options = {};
 function setOptions (userOptions) {
 	options.wrapWithFunction = userOptions.wrapWithFunction || false;
 	options.useProxy = userOptions.useProxy || false;
-	options.functionName = userOptions.functionName || 'io';
-	options.runtimeLib = userOptions.runtimeLib || '_io';
+	options.functionName = userOptions.functionName || 'lio';
+	options.runtimeLib = userOptions.runtimeLib || '_lio';
 	options.self = userOptions.self || 'self';
 }
 

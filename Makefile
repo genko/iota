@@ -11,13 +11,13 @@ parser: src/parser.js
 src/parser.js: src/parser.jison
 	$(JISON) src/parser.jison -o src/parser.js
 
-browser: $(BROWSER_DEMOS)/iota-browser.js $(BROWSER_DEMOS)/lib.js iota-browser.js lib.js
+browser: $(BROWSER_DEMOS)/lio-browser.js $(BROWSER_DEMOS)/lib.js lio-browser.js lib.js
 
-$(BROWSER_DEMOS)/iota-browser.js $(BROWSER_DEMOS)/lib.js iota-browser.js lib.js: src/*.js iota.js
-	$(BROWSERIFY) -r ./iota.js:iota-compiler -o $(BROWSER_DEMOS)/iota-browser.js
+$(BROWSER_DEMOS)/lio-browser.js $(BROWSER_DEMOS)/lib.js lio-browser.js lib.js: src/*.js lio.js
+	$(BROWSERIFY) -r ./lio.js:lio-compiler -o $(BROWSER_DEMOS)/lio-browser.js
 	cp src/lib.js $(BROWSER_DEMOS)/lib.js
 	cp src/lib.js .
-	cp $(BROWSER_DEMOS)/iota-browser.js .
+	cp $(BROWSER_DEMOS)/lio-browser.js .
 
 ./node_modules:
 	npm install jison
@@ -25,17 +25,18 @@ $(BROWSER_DEMOS)/iota-browser.js $(BROWSER_DEMOS)/lib.js iota-browser.js lib.js:
 	npm install escodegen
 	npm install ast-types
 	npm install jasmine-node
+
 clean:
-	rm -rf demos/browser/iota-browser.js
+	rm -rf demos/browser/lio-browser.js
 	rm -rf demos/browser/lib.js
 	rm -rf lib.js
-	rm -rf iota-browser.js
+	rm -rf lio-browser.js
 	rm -rf src/parser.js
 
 dist-clean: clean
 	rm -rf node_modules
 
 test:
-	./node_modules/.bin/jasmine-node test/iota-spec.js
+	./node_modules/.bin/jasmine-node test/lio-spec.js
 
 .PHONY: test clean dist-clean
